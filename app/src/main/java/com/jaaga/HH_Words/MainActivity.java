@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.archit.abcflip.SimpleGestureFilter.SimpleGestureListener;
+import com.jaaga.HH_Words.SimpleGestureFilter.SimpleGestureListener;
 
 import java.util.Locale;
 
