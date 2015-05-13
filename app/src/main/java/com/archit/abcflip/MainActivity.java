@@ -8,12 +8,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.archit.abcflip.SimpleGestureFilter.SimpleGestureListener;
 
 import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements SimpleGestureListener {
+    private SimpleGestureFilter detector;
     Locale myLocale;
     TextView tv;
 
@@ -23,6 +28,8 @@ public class MainActivity extends ActionBarActivity {
         tv=(TextView)findViewById(R.id.textView1);
 
         setContentView(R.layout.activity_main);
+        // Detect touched area
+        detector = new SimpleGestureFilter(this,this);
 
 
     }
@@ -72,5 +79,38 @@ public class MainActivity extends ActionBarActivity {
         res.updateConfiguration(conf, dm);
         Intent refresh = new Intent(this, MainActivity.class);
         startActivity(refresh);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent me){
+        // Call onTouchEvent of SimpleGestureFilter class
+        this.detector.onTouchEvent(me);
+        return super.dispatchTouchEvent(me);
+    }
+
+    @Override
+    public void onSwipe(int direction) {
+
+        String str = "";
+
+        switch (direction) {
+
+            case SimpleGestureFilter.SWIPE_RIGHT : str = "Swipe Right";
+                break;
+            case SimpleGestureFilter.SWIPE_LEFT :  str = "Swipe Left";
+                break;
+            case SimpleGestureFilter.SWIPE_DOWN :  str = "Swipe Down";
+                break;
+            case SimpleGestureFilter.SWIPE_UP :    str = "Swipe Up";
+                break;
+
+        }
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDoubleTap() {
+
+        Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
     }
 }
