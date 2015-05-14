@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,19 +20,30 @@ import com.jaaga.HH_Words.SimpleGestureFilter.SimpleGestureListener;
 import java.util.Locale;
 
 
+
 public class MainActivity extends ActionBarActivity implements SimpleGestureListener {
     private SimpleGestureFilter detector;
     Locale myLocale;
     TextView tv;
+    ImageView im;
+    private TextToSpeech engine;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tv=(TextView)findViewById(R.id.textView1);
+        tv = (TextView) findViewById(R.id.textView1);
+        im = (ImageView) findViewById(R.id.imageView1);
+        im.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         setContentView(R.layout.activity_main);
         // Detect touched area
-        detector = new SimpleGestureFilter(this,this);
+        detector = new SimpleGestureFilter(this, this);
 
 
     }
@@ -69,6 +83,7 @@ public class MainActivity extends ActionBarActivity implements SimpleGestureList
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public void setLocale(String lang) {
 
         myLocale = new Locale(lang);
@@ -82,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements SimpleGestureList
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent me){
+    public boolean dispatchTouchEvent(MotionEvent me) {
         // Call onTouchEvent of SimpleGestureFilter class
         this.detector.onTouchEvent(me);
         return super.dispatchTouchEvent(me);
@@ -95,13 +110,17 @@ public class MainActivity extends ActionBarActivity implements SimpleGestureList
 
         switch (direction) {
 
-            case SimpleGestureFilter.SWIPE_RIGHT : str = "Swipe Right";
+            case SimpleGestureFilter.SWIPE_RIGHT:
+                str = "Swipe Right";
                 break;
-            case SimpleGestureFilter.SWIPE_LEFT :  str = "Swipe Left";
+            case SimpleGestureFilter.SWIPE_LEFT:
+                str = "Swipe Left";
                 break;
-            case SimpleGestureFilter.SWIPE_DOWN :  str = "Swipe Down";
+            case SimpleGestureFilter.SWIPE_DOWN:
+                str = "Swipe Down";
                 break;
-            case SimpleGestureFilter.SWIPE_UP :    str = "Swipe Up";
+            case SimpleGestureFilter.SWIPE_UP:
+                str = "Swipe Up";
                 break;
 
         }
@@ -113,4 +132,7 @@ public class MainActivity extends ActionBarActivity implements SimpleGestureList
 
         Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
     }
-}
+
+
+    }
+
